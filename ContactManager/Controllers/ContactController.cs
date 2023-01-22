@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using ContactManager.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -11,12 +12,20 @@ namespace ContactManager.Controllers
     [ApiController]
     public class ContactController : ControllerBase
     {
-        public string[] Get()
+        public Contact[] Get()
         {
-            return new string[]
+            return new Contact[]
             {
-        "Hello",
-        "World"
+                new Contact
+                {
+                    Id = 1,
+                    Name = "Glenn Block"
+                },
+                new Contact
+                {
+                    Id = 2,
+                    Name = "Dan Roth"
+                }
             };
         }
     }
