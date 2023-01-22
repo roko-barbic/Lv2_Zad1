@@ -11,5 +11,13 @@ namespace ContactManager.Controllers
     [ApiController]
     public class ContactController : ControllerBase
     {
+        public string[] Get()
+        {
+            return new string[]
+            {
+        "Hello",
+        "World"
+            };
+        }
     }
 }
