@@ -15,9 +15,9 @@ namespace ContactManager.Controllers
     {
         private ContactRepository contactRepository;
 
-        public ContactController()
+        public ContactController(ContactRepository contactRepository, IHttpContextAccessor httpContextAccessor)
         {
-            this.contactRepository = new ContactRepository();
+            contactRepository = contactRepository;
         }
         public Contact[] Get()
         {

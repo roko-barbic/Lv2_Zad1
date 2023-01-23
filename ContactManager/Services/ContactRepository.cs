@@ -11,24 +11,16 @@ namespace ContactManager.Services
 {
     public class ContactRepository
     {
+        private readonly IHttpContextAccessor _httpContextAccessor;
         private const string CacheKey = "ContactStore";
+
         public ContactRepository(IHttpContextAccessor httpContextAccessor)
         {
-            var ctx = httpContextAccessor.HttpContext;
-            if (ctx != null)
-            {
-                var contacts = new Contact[]
-                {
-            new Contact { Id = 1, Name = "Glenn Block" },
-            new Contact { Id = 2, Name = "Dan Roth" }
-                };
-                ctx.Session.SetString(CacheKey, JsonConvert.SerializeObject(contacts));
-            }
+            _httpContextAccessor = httpContextAccessor;
         }
-
-        public Contact[] GetAllContacts(IHttpContextAccessor httpContextAccessor)
+        public Contact[] GetAllContacts()
         {
-            var ctx = httpContextAccessor.HttpContext;
+            var ctx = _httpContextAccessor.HttpContext;
             if (ctx != null)
             {
                 var contactsJson = ctx.Session.GetString(CacheKey);
@@ -36,6 +28,6 @@ namespace ContactManager.Services
             }
             return new Contact[] { };
         }
-
     }
+
 }
