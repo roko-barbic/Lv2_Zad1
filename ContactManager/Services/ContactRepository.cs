@@ -10,24 +10,28 @@ using Newtonsoft.Json;
 namespace ContactManager.Services
 {
     public class ContactRepository
-    {
-        private readonly IHttpContextAccessor _httpContextAccessor;
-        private const string CacheKey = "ContactStore";
+{
+    private readonly IHttpContextAccessor _httpContextAccessor;
+    private const string CacheKey = "ContactStore";
 
-        public ContactRepository(IHttpContextAccessor httpContextAccessor)
-        {
-            _httpContextAccessor = httpContextAccessor;
-        }
-        public Contact[] GetAllContacts()
-        {
-            var ctx = _httpContextAccessor.HttpContext;
-            if (ctx != null)
-            {
-                var contactsJson = ctx.Session.GetString(CacheKey);
-                return JsonConvert.DeserializeObject<Contact[]>(contactsJson);
-            }
-            return new Contact[] { };
-        }
+    public ContactRepository(IHttpContextAccessor httpContextAccessor)
+    {
+        _httpContextAccessor = httpContextAccessor;
     }
+    public Contact[] GetAllContacts()
+    {
+        var ctx = _httpContextAccessor.HttpContext;
+        if (ctx != null)
+        {
+            var contactsJson = ctx.Session.GetString(CacheKey);
+            return JsonConvert.DeserializeObject<Contact[]>(contactsJson);
+        }
+        return new Contact[] { new Contact
+            {
+                Id = 0,
+                Name = "Placeholder"
+            }};
+    }
+}
 
 }
