@@ -1,10 +1,7 @@
 ﻿using ContactManager.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Net.Http;
 using ContactManager.Services;
 
 namespace ContactManager.Controllers
@@ -17,19 +14,21 @@ namespace ContactManager.Controllers
 
         public ContactController(ContactRepository contactRepository, IHttpContextAccessor httpContextAccessor)
         {
-            contactRepository = contactRepository;
+            this.contactRepository = contactRepository;
         }
+
+        [HttpGet]
         public Contact[] Get()
         {
             return contactRepository.GetAllContacts();
         }
-        public HttpResponseMessage Post(Contact contact)
+
+        [HttpPost]
+        public IActionResult Post(Contact contact)
         {
-            this.contactRepository.SaveContact(contact);
+            //this.contactRepository.SaveContact(contact);
 
-            var response = Request.CreateResponse<Contact>(System.Net.HttpStatusCode.Created, contact);
-
-            return response;
+            return CreatedAtAction(nameof(Get), new { id = contact.Id }, contact);
         }
     }
 }
